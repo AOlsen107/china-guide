@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block header %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="attraction-card">
+    <div class="attraction-row">
+        <div class="attraction-image">
+            <img src="{{ url_for('static', filename=image_url) }}" alt="{{ title }}">
+        </div>
+        <div class="attraction-text">
+            <h1 class="attraction-title">{{ title }}</h1>
+            <p class="attraction-description">{{ description | safe }}</p>
+        </div>
+    </div>
+    <div class="attraction-row">
+        <div class="attraction-image">
+            <img src="{{ url_for('static', filename=image_url2) }}" alt="{{ title }}">
+        </div>
+        <div class="attraction-text">
+            {% if current_weather %}
+            <h2>Current Weather</h2>
+            <p>Description: {{ current_weather.description }}</p>
+            <p>Temperature: {{ current_weather.temperature }}°C</p>
+            <p>Humidity: {{ current_weather.humidity }}%</p>
+            <p>Wind Speed: {{ current_weather.wind_speed }} m/s</p>
+            {% else %}
+            <p>Weather data is not available at the moment.</p>
+            {% endif %}
+            {% if forecast %}
+            <h3>Weather Forecast</h3>
+            <ul>
+                {% for item in forecast %}
+                <li>{{ item.time }} - {{ item.temperature }}°C - {{ item.description }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Weather forecast data is not available at the moment.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

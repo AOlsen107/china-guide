@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+            </ul>
+        </nav>
+        <h1>Welcome to Tourist.com</h1>
+    </header>
+    <div class="container">
+        <p>This is the home page. Explore various attractions!</p>
+        <div class="attraction-links">
+            <div class="attraction-link">
+                <a href="{{ url_for('attraction', attraction_id='bj') }}">
+                    <img src="{{ url_for('static', filename='images/bj1.jpg') }}" alt="Beijing">
+                    <h2>Beijing</h2>
+                </a>
+            </div>
+            <div class="attraction-link">
+                <a href="{{ url_for('attraction', attraction_id='sh') }}">
+                    <img src="{{ url_for('static', filename='images/sh1.jpg') }}" alt="Shanghai">
+                    <h2>Shanghai</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Tourist</p>
+    </footer>
+</body>
+
+</html>

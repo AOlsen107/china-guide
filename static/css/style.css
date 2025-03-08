@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    flex: 1;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.attraction-card {
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.attraction-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.attraction-row.reverse {
+    flex-direction: row-reverse;
+}
+
+.attraction-image {
+    flex: 1;
+    padding: 10px;
+}
+
+.attraction-image img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.attraction-text {
+    flex: 1;
+    padding: 10px;
+}
+
+.attraction-title {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.attraction-description {
+    font-size: 1em;
+    color: #6c757d;
+}
+
+.weather {
+    margin-top: 20px;
+}
+
+.weather h3 {
+    margin: 10px 0;
+}
+
+.attraction-links {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.attraction-link {
+    text-align: center;
+    flex: 1;
+    margin: 0 10px;
+    position: relative;
+}
+
+.attraction-link img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    /* Increase the size */
+    border-radius: 5px;
+    transition: transform 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+.attraction-link img:hover {
+    transform: scale(1.05);
+}
+
+.attraction-link h2 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #343a40;
+}
+
+.attraction-link:nth-child(2) img {
+    margin-left: -50px;
+    /* Overlap the images slightly */
+}
