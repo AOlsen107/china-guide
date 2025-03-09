@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request, abort
 import json
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -8,8 +9,8 @@ app = Flask(__name__)
 with open('attractions.json') as f:
     attractions_data = json.load(f)
 
-# OpenWeatherMap API key
-API_KEY = '41fa41b89b49565da5dafd55ddd6a297'
+# OpenWeatherMap API key from environment variable
+API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
 
 
 def get_weather(city):
