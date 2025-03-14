@@ -126,8 +126,8 @@ footer {
 .attraction-link img {
     width: 100%;
     height: auto;
-    max-width: 400px;
-    /* Increase the size */
+    max-width: 200px;
+    /* Adjust the size */
     border-radius: 5px;
     transition: transform 0.3s;
     position: relative;
@@ -147,4 +147,19 @@ footer {
 .attraction-link:nth-child(2) img {
     margin-left: -50px;
     /* Overlap the images slightly */
+}
+
+/* New styles for city and attraction images */
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    max-width: 45%;
+    /* Adjust the size */
+    margin: 10px;
+    border-radius: 5px;
 }

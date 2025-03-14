@@ -7,7 +7,9 @@ app = Flask(__name__)
 
 # Load attraction data from JSON file
 with open('attractions.json') as f:
-    attractions_data = json.load(f)
+    data = json.load(f)
+    cities_data = data['cities']
+    attractions_data = data['attractions']
 
 # OpenWeatherMap API key from environment variable
 API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
@@ -31,7 +33,6 @@ def get_weather(city):
             'wind_speed': weather_data['wind']['speed']
         }
 
-        # Get the forecast for the next 5 time points
         forecast_list = forecast_data['list'][:5]
         forecast = [{'time': item['dt_txt'], 'temperature': item['main']['temp'],
                      'description': item['weather'][0]['description']} for item in forecast_list]
@@ -46,21 +47,28 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/attractions')
-def attractions():
-    return render_template('attractions.html')
+@app.route('/city/<city_id>')
+def city(city_id):
+    city_info = cities_data.get(city_id)
+    if city_info:
+        city_attractions = [
+            {"id": key, **attraction} for key, attraction in attractions_data.items() if attraction['city'].lower() == city_info['title'].lower()
+        ]
+        return render_template('city.html', title=city_info['title'], header=f'Attractions in {city_info["title"]}', city_name=city_info['title'], city_description=city_info['description'], city_image_url=city_info['image_url'], city_image_url2=city_info['image_url2'], city_weather=city_info['weather'], city_forecast=city_info['forecast'], attractions=city_attractions)
+    else:
+        return "City not found", 404
 
 
 @app.route('/attraction/<attraction_id>')
 def attraction(attraction_id):
     attraction_info = attractions_data.get(attraction_id)
     if attraction_info:
-        city = attraction_info['title']
+        city = attraction_info['city']
         current_weather, forecast = get_weather(city)
         if current_weather and forecast:
-            return render_template('attraction.html', title=attraction_info['title'], image_url=attraction_info['image_url'], image_url2=attraction_info['image_url2'], description=attraction_info['description'], current_weather=current_weather, forecast=forecast)
+            return render_template('attraction.html', title=attraction_info['title'], header=attraction_info['title'], image_url=attraction_info['image_url'], image_url2=attraction_info['image_url2'], description=attraction_info['description'], current_weather=current_weather, forecast=forecast)
         else:
-            return render_template('attraction.html', title=attraction_info['title'], image_url=attraction_info['image_url'], image_url2=attraction_info['image_url2'], description=attraction_info['description'], current_weather=None, forecast=None)
+            return render_template('attraction.html', title=attraction_info['title'], header=attraction_info['title'], image_url=attraction_info['image_url'], image_url2=attraction_info['image_url2'], description=attraction_info['description'], current_weather=None, forecast=None)
     else:
         return "Attraction not found", 404
 

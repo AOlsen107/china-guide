@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="image-container">
+        <img src="{{ url_for('static', filename=city_image_url) }}" alt="{{ city_name }}">
+        <img src="{{ url_for('static', filename=city_image_url2) }}" alt="{{ city_name }}">
+    </div>
+    <p>{{ city_description | safe }}</p>
+    <h3>Current Weather</h3>
+    <p>{{ city_weather }}</p>
+    <h3>Weather Forecast</h3>
+    <p>{{ city_forecast }}</p>
+    <h2>Attractions in {{ city_name }}</h2>
+    <ul>
+        {% for attraction in attractions %}
+        <li><a href="{{ url_for('attraction', attraction_id=attraction.id) }}">{{ attraction.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
