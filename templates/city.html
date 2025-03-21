@@ -21,5 +21,20 @@
         <li><a href="{{ url_for('attraction', attraction_id=attraction.id) }}">{{ attraction.title }}</a></li>
         {% endfor %}
     </ul>
+    <div id="map" style="height: 400px;"></div>
 </div>
+
+<script>
+    var map = L.map('map').setView([39.9042, 116.4074], 10); // Center on the city (e.g., Beijing)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    {% for attraction in attractions %}
+    L.marker([{{ attraction.latitude }}, {{ attraction.longitude }}]).addTo(map)
+        .bindPopup('<b>{{ attraction.title }}</b><br>{{ attraction.description }}');
+    {% endfor %}
+</script>
 {% endblock %}

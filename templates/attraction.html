@@ -6,31 +6,31 @@
 
 {% block content %}
 <div class="container">
-    <div class="attraction-info">
-        <h1>{{ title }}</h1>
-        <div class="image-container">
-            <img src="{{ url_for('static', filename=image_url) }}" alt="{{ title }}">
-            <img src="{{ url_for('static', filename=image_url2) }}" alt="{{ title }}">
-        </div>
-        <p>{{ description | safe }}</p>
-        <h3>Current Weather</h3>
-        {% if current_weather %}
-        <p>{{ current_weather.description }}, {{ current_weather.temperature }}°C</p>
-        <p>Humidity: {{ current_weather.humidity }}%</p>
-        <p>Wind Speed: {{ current_weather.wind_speed }} m/s</p>
-        {% else %}
-        <p>Weather data not available.</p>
-        {% endif %}
-        <h3>Weather Forecast</h3>
-        {% if forecast %}
-        <ul>
-            {% for item in forecast %}
-            <li>{{ item.time }} - {{ item.temperature }}°C - {{ item.description }}</li>
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>Forecast data not available.</p>
-        {% endif %}
+    <h1>{{ title }}</h1>
+    <div class="image-container">
+        <img src="{{ url_for('static', filename=image_url) }}" alt="{{ title }}">
+        <img src="{{ url_for('static', filename=image_url2) }}" alt="{{ title }}">
     </div>
+    <p>{{ description | safe }}</p>
+
+    <!-- Map Section -->
+    <h3>Location</h3>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([{{ latitude if latitude is not none else 0 }}, { { longitude if longitude is not none else 0 } }], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add a marker for the attraction
+        L.marker([{{ latitude }}, {{ longitude }}]).addTo(map)
+            .bindPopup('<b>{{ title }}</b><br>{{ description }}')
+            .openPopup();
+    </script>
 </div>
 {% endblock %}

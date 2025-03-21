@@ -52,9 +52,23 @@ def city(city_id):
     city_info = cities_data.get(city_id)
     if city_info:
         city_attractions = [
-            {"id": key, **attraction} for key, attraction in attractions_data.items() if attraction['city'].lower() == city_info['title'].lower()
+            {"id": key, "latitude": attraction["latitude"],
+                "longitude": attraction["longitude"], **attraction}
+            for key, attraction in attractions_data.items()
+            if attraction['city'].lower() == city_info['title'].lower()
         ]
-        return render_template('city.html', title=city_info['title'], header=f'Attractions in {city_info["title"]}', city_name=city_info['title'], city_description=city_info['description'], city_image_url=city_info['image_url'], city_image_url2=city_info['image_url2'], city_weather=city_info['weather'], city_forecast=city_info['forecast'], attractions=city_attractions)
+        return render_template(
+            'city.html',
+            title=city_info['title'],
+            header=f'Attractions in {city_info["title"]}',
+            city_name=city_info['title'],
+            city_description=city_info['description'],
+            city_image_url=city_info['image_url'],
+            city_image_url2=city_info['image_url2'],
+            city_weather=city_info['weather'],
+            city_forecast=city_info['forecast'],
+            attractions=city_attractions
+        )
     else:
         return "City not found", 404
 
@@ -65,10 +79,18 @@ def attraction(attraction_id):
     if attraction_info:
         city = attraction_info['city']
         current_weather, forecast = get_weather(city)
-        if current_weather and forecast:
-            return render_template('attraction.html', title=attraction_info['title'], header=attraction_info['title'], image_url=attraction_info['image_url'], image_url2=attraction_info['image_url2'], description=attraction_info['description'], current_weather=current_weather, forecast=forecast)
-        else:
-            return render_template('attraction.html', title=attraction_info['title'], header=attraction_info['title'], image_url=attraction_info['image_url'], image_url2=attraction_info['image_url2'], description=attraction_info['description'], current_weather=None, forecast=None)
+        return render_template(
+            'attraction.html',
+            title=attraction_info['title'],
+            header=attraction_info['title'],
+            image_url=attraction_info['image_url'],
+            image_url2=attraction_info['image_url2'],
+            description=attraction_info['description'],
+            latitude=attraction_info['latitude'],
+            longitude=attraction_info['longitude'],
+            current_weather=current_weather,
+            forecast=forecast
+        )
     else:
         return "Attraction not found", 404
 
